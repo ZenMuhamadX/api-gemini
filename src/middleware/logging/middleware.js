@@ -1,2 +1,2 @@
 import morgan from "morgan";
-export const logger = morgan("dev")
+export const logger = morgan("dev");

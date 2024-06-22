@@ -12,7 +12,7 @@ const dataFromSupabase = async (id) => {
    return datas;
 };
 
-route.get("/getdata", async (req, res) => {
+route.get("/data", async (req, res) => {
    const ID = req.query.ID;
    const token = req.query.token;
    if (!ID || !token) {
@@ -20,7 +20,7 @@ route.get("/getdata", async (req, res) => {
          status: 400,
          message: "ID,token must provided in the query parameter",
       });
-   } else if (token != "04022008") {
+   } else if (token != "zen") {
       return res.status(401).json({
          status: 401,
          message: "Unauthorized",

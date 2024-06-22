@@ -4,27 +4,30 @@ import { generateJWT } from "../../lib/genrateJWT.js";
 import response from "../../config/response/responseSucces.js";
 
 // Define a route to handle JWT creation
-route.post("/create", async (req, res) => {
+route.post("/jwt", async (req, res) => {
    // Extract payload data from the request body
-   const { role, status, username, email } = req.body;
-   const payload = { role, status, username, email };
+   const { role, username, email } = req.body;
    // Check if payload is provided
-   if (
-      !payload.role ||
-      !payload.status ||
-      !payload.username ||
-      !payload.email
-   ) {
+   if (!role || !username || !email) {
       // Return an error response if payload is missing
-      return response(400, [], "Payload is required", true, res);
+      return response(
+         400,
+         {
+            role: "your role",
+            username: "your name",
+            email: "your email",
+         },
+         "Payload is required",
+         true,
+         res
+      );
    }
    // Attempt to generate a JWT
    try {
       const token = generateJWT({
-         role: payload.role,
-         status: payload.status,
-         username: payload.username,
-         email: payload.email,
+         role,
+         username,
+         email,
       });
       // Handle successful JWT generation (e.g., send a success response)
       return response(200, { token }, "JWT generated successfully", false, res);

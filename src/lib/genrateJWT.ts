@@ -6,7 +6,7 @@ import jwt, { SignOptions } from "jsonwebtoken"; // Mengimpor modul jsonwebtoken
 let privateKey: Buffer;
 try {
    // Membaca kunci privat dari file private_key.pem
-   privateKey = fs.readFileSync("private/private_key.pem");
+   privateKey = fs.readFileSync("private_key.pem");
 } catch (error) {
    // Menangani kesalahan jika gagal membaca kunci privat
    console.error("Error membaca kunci privat:", error);
@@ -21,7 +21,6 @@ const signOptions: SignOptions = {
 // Mendefinisikan interface untuk payload JWT
 interface payloadMustBeObject {
    role: string;
-   status: string;
    username: string;
    email?: string;
 }

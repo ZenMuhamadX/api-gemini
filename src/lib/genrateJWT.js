@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken"; // Mengimpor modul jsonwebtoken untuk menghasilk
 let privateKey;
 try {
     // Membaca kunci privat dari file private_key.pem
-    privateKey = fs.readFileSync("private/private_key.pem");
+    privateKey = fs.readFileSync("private_key.pem");
 }
 catch (error) {
     // Menangani kesalahan jika gagal membaca kunci privat

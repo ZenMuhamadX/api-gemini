@@ -16,7 +16,7 @@ const engineAI = model.startChat({
 route.post("/gemini", async (req, res) => {
    const { prompt } = await req.body;
    if (!prompt) {
-      return response(400, null, "Bad Request Require prompt", true, res);
+      return response(400, null, "Require prompt", true, res);
    }
    try {
       const result = await engineAI.sendMessage(prompt);
