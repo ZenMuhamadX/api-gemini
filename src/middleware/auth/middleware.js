@@ -4,7 +4,8 @@ import { verifyJWT } from "../../lib/verifyJWT.js";
 export const verifyAuthJWT = async (req, res, next) => {
    try {
       const header = req.headers.authorization;
-      if (!header) {
+      const token = header.split(" ")[1]; // Ambil token dari header authorization (format: Bearer <token>)
+      if (!token) {
          return response(
             401,
             null,
@@ -13,7 +14,6 @@ export const verifyAuthJWT = async (req, res, next) => {
             res
          );
       }
-      const token = header.split(" ")[1]; // Ambil token dari header authorization (format: Bearer <token>)
       const decoded = await verifyJWT(token); // Melakukan verifikasi JWT dengan token
       if (decoded) {
          next(); // Lanjutkan jika token valid

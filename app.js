@@ -41,7 +41,7 @@ const getMethod = (req, res, next) => {
    }
 };
 app.use("/read/", getMethod, getData);
-app.use("/v1/create/", getMethod, createJWT);
+app.use("/v1/create/", middlewareAllowedMethod, createJWT);
 
 // Rute-rute yang memerlukan autentikasi
 app.use("/v2/data/", middlewareAllowedMethod, verifyAuthJWT, createData);

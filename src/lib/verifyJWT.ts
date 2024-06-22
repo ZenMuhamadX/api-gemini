@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
-import fs from "fs";
+import "dotenv/config";
 
 export const verifyJWT = (token: string): Promise<any> => {
    return new Promise((resolve, reject) => {
-      let publicKey: Buffer;
+      let publicKey: any;
       try {
-         publicKey = fs.readFileSync("public_key.pem"); // Membaca kunci publik dari file
+         publicKey = process.env.PUBLIC_KEY; // Membaca kunci publik
       } catch (err) {
          console.error("Error reading public key file:", err);
          reject(err);

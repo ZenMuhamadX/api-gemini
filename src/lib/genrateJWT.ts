@@ -3,10 +3,10 @@ import fs from "fs"; // Mengimpor modul file system untuk membaca kunci privat
 import jwt, { SignOptions } from "jsonwebtoken"; // Mengimpor modul jsonwebtoken untuk menghasilkan JWT
 
 // Mendeklarasikan variabel untuk menyimpan kunci privat
-let privateKey: Buffer;
+let privateKey: any;
 try {
    // Membaca kunci privat dari file private_key.pem
-   privateKey = fs.readFileSync("private_key.pem");
+   privateKey = process.env.PRIVATE_KEY;
 } catch (error) {
    // Menangani kesalahan jika gagal membaca kunci privat
    console.error("Error membaca kunci privat:", error);
