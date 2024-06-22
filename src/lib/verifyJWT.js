@@ -2,7 +2,15 @@ import jwt from "jsonwebtoken";
 import fs from "fs";
 export const verifyJWT = (token) => {
     return new Promise((resolve, reject) => {
-        const publicKey = fs.readFileSync("public_key.pem");
+        let publicKey;
+        try {
+            publicKey = fs.readFileSync("public_key.pem"); // Membaca kunci publik dari file
+        }
+        catch (err) {
+            console.error("Error reading public key file:", err);
+            reject(err);
+            return;
+        }
         jwt.verify(token, publicKey, (err, decoded) => {
             if (err) {
                 // Token tidak valid atau telah kedaluwarsa

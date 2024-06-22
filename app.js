@@ -36,4 +36,4 @@ app.use(verifyAuthJWT);
 
 // Routes
 app.use("/v1/ai", AI);
-app.use("/v1/create", createData);
+app.use("/v1", createData);

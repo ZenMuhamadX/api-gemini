@@ -4,7 +4,7 @@ import { generateJWT } from "../../lib/genrateJWT.js";
 import response from "../../config/response/responseSucces.js";
 
 // Define a route to handle JWT creation
-route.post("/", async (req, res) => {
+route.post("/create", async (req, res) => {
    // Extract payload data from the request body
    const { role, status, username, email } = req.body;
    const payload = { role, status, username, email };

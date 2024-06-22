@@ -13,17 +13,18 @@ const engineAI = model.startChat({
    },
 });
 
-route.post("/", async (req, res) => {
+route.post("/gemini", async (req, res) => {
    const { prompt } = await req.body;
    if (!prompt) {
-      return response(400, null, "Bad Request Require Prompt", true, res);
+      return response(400, null, "Bad Request Require prompt", true, res);
    }
    try {
       const result = await engineAI.sendMessage(prompt);
       const data = result.response.text();
       return response(200, data, "OK", false, res);
    } catch (error) {
-      return response(500, null, "Internal Server Error", true, res);
+      console.log(error);
+      return response(500, null, "Internal Server Error", error, res);
    }
 });
 
