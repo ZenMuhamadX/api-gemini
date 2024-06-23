@@ -14,7 +14,6 @@ export const verifyJWT = (token) => {
         jwt.verify(token, publicKey, (err, decoded) => {
             if (err) {
                 // Token tidak valid atau telah kedaluwarsa
-                console.error("Error verifikasi token:", err);
                 reject(err);
             }
             else {
