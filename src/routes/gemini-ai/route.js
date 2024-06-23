@@ -29,7 +29,16 @@ route.post("/gemini", async (req, res) => {
    try {
       const result = await engineAI.sendMessage(prompt);
       const data = result.response.text();
-      return response(200, data, "OK", false, res);
+      return response(
+         200,
+         {
+            prompt: prompt,
+            engineAI: data,
+         },
+         "OK",
+         false,
+         res
+      );
    } catch (error) {
       console.log(error);
       return response(500, null, "Internal Server Error", error, res);
