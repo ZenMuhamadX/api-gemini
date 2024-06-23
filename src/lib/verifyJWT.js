@@ -2,16 +2,16 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 export const verifyJWT = (token) => {
     return new Promise((resolve, reject) => {
-        let publicKey;
+        let privateKey;
         try {
-            publicKey = process.env.PUBLIC_KEY; // Membaca kunci publik
+            privateKey = process.env.PRIVATE_KEY;
         }
         catch (err) {
-            console.error("Error reading public key file:", err);
+            console.error("Error reading private_key :", err);
             reject(err);
             return;
         }
-        jwt.verify(token, publicKey, (err, decoded) => {
+        jwt.verify(token, privateKey, (err, decoded) => {
             if (err) {
                 // Token tidak valid atau telah kedaluwarsa
                 reject(err);

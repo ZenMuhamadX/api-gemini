@@ -1,6 +1,5 @@
 import "dotenv/config"; // Mengimpor konfigurasi dari file .env
-import fs from "fs"; // Mengimpor modul file system untuk membaca kunci privat
-import jwt, { SignOptions } from "jsonwebtoken"; // Mengimpor modul jsonwebtoken untuk menghasilkan JWT
+import jwt from "jsonwebtoken"; // Mengimpor modul jsonwebtoken untuk menghasilkan JWT
 
 // Mendeklarasikan variabel untuk menyimpan kunci privat
 let privateKey: any;
@@ -12,12 +11,6 @@ try {
    console.error("Error membaca kunci privat:", error);
    throw new Error("Gagal membaca kunci privat");
 }
-
-// Menentukan opsi penandatanganan JWT, menggunakan algoritma RS256
-const signOptions: SignOptions = {
-   algorithm: "RS256",
-};
-
 // Mendefinisikan interface untuk payload JWT
 interface payloadMustBeObject {
    role: string;
@@ -33,7 +26,7 @@ export const generateJWT = (payload: payloadMustBeObject): string => {
    }
    try {
       // Menghasilkan JWT menggunakan payload, kunci privat, dan opsi penandatanganan
-      const token = jwt.sign(payload, privateKey, signOptions);
+      const token = jwt.sign(payload, privateKey);
       return token; // Mengembalikan token JWT yang dihasilkan
    } catch (error) {
       // Menangani kesalahan jika gagal menghasilkan JWT

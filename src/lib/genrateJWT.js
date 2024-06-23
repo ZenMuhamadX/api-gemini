@@ -11,10 +11,6 @@ catch (error) {
     console.error("Error membaca kunci privat:", error);
     throw new Error("Gagal membaca kunci privat");
 }
-// Menentukan opsi penandatanganan JWT, menggunakan algoritma RS256
-const signOptions = {
-    algorithm: "RS256",
-};
 // Fungsi untuk menghasilkan JWT
 export const generateJWT = (payload) => {
     // Validasi jika payload kosong
@@ -23,7 +19,7 @@ export const generateJWT = (payload) => {
     }
     try {
         // Menghasilkan JWT menggunakan payload, kunci privat, dan opsi penandatanganan
-        const token = jwt.sign(payload, privateKey, signOptions);
+        const token = jwt.sign(payload, privateKey);
         return token; // Mengembalikan token JWT yang dihasilkan
     }
     catch (error) {
