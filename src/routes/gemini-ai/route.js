@@ -6,12 +6,20 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // fetch ai
 const genAI = new GoogleGenerativeAI(process.env.SECRET_KEY_AI);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+let history = [];
 const engineAI = model.startChat({
-   history: [],
+   history: history,
    generationConfig: {
       maxOutputTokens: 100,
    },
 });
+
+// route.post("/clear", (req, res) => {
+//    response(200, history, "history clear", false, res);
+//    console.log(history);
+//    history = [];
+//    console.log(history);
+// });
 
 route.post("/gemini", async (req, res) => {
    const { prompt } = await req.body;
