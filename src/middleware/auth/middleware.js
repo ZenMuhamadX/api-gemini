@@ -8,7 +8,7 @@ export const verifyAuthJWT = async (req, res, next) => {
          401,
          null,
          "Unauthorized",
-         "Token must be provided in header",
+         "Token must be provided in Bearer",
          res
       );
    }
