@@ -2,7 +2,7 @@ import response from "../config/response/responseSucces.js";
 
 export const middlewareAllowedMethod = (req, res, next) => {
    try {
-      const contenType = req.headers["content-type"]
+      const contenType = req.headers["content-type"];
       const allowedMethods = ["POST"];
       if (!allowedMethods.includes(req.method)) {
          return res.status(405).json({
@@ -10,10 +10,10 @@ export const middlewareAllowedMethod = (req, res, next) => {
             message: "Method Not Allowed",
          });
       }
-      if (contenType == "application/json") {
-         next();
-      } else {
+      if (contenType != "application/json") {
          return response(400, [], "Bad Request", "Invalid Content-Type", res);
+      } else {
+         next();
       }
       if (typeof req.body !== "object" || Array.isArray(req.body)) {
          return response(400, [], "Bad Request", "Invalid JSON Data", res); // Menggunakan kode status 400 untuk Bad Request
