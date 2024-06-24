@@ -7,42 +7,50 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.SECRET_KEY_AI);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 let history = [];
-const engineAI = model.startChat({
-   history: history,
-   generationConfig: {
-      maxOutputTokens: 100,
-   },
+let engineAI; // Deklarasikan engineAI di luar untuk akses global
+
+// Fungsi untuk memulai sesi obrolan baru
+function startNewChat() {
+    engineAI = model.startChat({
+        history: history,
+        generationConfig: {
+            maxOutputTokens: 100,
+        },
+    });
+}
+
+// Mulai sesi obrolan awal
+startNewChat();
+
+route.post("/clear", (req, res) => {
+    history = []; // Hapus riwayat
+    startNewChat(); // Mulai sesi obrolan baru
+    response(200, {}, "Riwayat obrolan telah dihapus dan sesi baru telah dimulai", false, res);
 });
 
-// route.post("/clear", (req, res) => {
-//    response(200, history, "history clear", false, res);
-//    console.log(history);
-//    history = [];
-//    console.log(history);
-// });
-
 route.post("/gemini", async (req, res) => {
-   const { prompt } = await req.body;
-   if (!prompt) {
-      return response(400, null, "Require prompt", true, res);
-   }
-   try {
-      const result = await engineAI.sendMessage(prompt);
-      const data = result.response.text();
-      return response(
-         200,
-         {
-            prompt: prompt,
-            engineAI: data,
-         },
-         "OK",
-         false,
-         res
-      );
-   } catch (error) {
-      console.log(error);
-      return response(500, null, "Internal Server Error", error, res);
-   }
+    const { prompt } = req.body; // Tidak perlu await di sini
+    if (!prompt) {
+        return response(400, null, "Perlu prompt", true, res);
+    }
+    try {
+        const result = await engineAI.sendMessage(prompt);
+        const data = result.response.text();
+        history.push({ prompt, response: data }); // Simpan riwayat
+        return response(
+            200,
+            {
+                prompt: prompt,
+                engineAI: data,
+            },
+            "OK",
+            false,
+            res
+        );
+    } catch (error) {
+        console.error(error); // Gunakan console.error untuk kesalahan
+        return response(500, null, "Terjadi kesalahan server", true, res);
+    }
 });
 
 export default route;
