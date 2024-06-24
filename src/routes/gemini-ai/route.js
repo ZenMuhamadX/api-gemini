@@ -8,6 +8,7 @@ const genAI = new GoogleGenerativeAI(process.env.SECRET_KEY_AI);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 let history = [];
 let engineAI; // Deklarasikan engineAI di luar untuk akses global
+let historyUser = []
 
 // Fungsi untuk memulai sesi obrolan baru
 function startNewChat() {
@@ -22,8 +23,13 @@ function startNewChat() {
 // Mulai sesi obrolan awal
 startNewChat();
 
+route.get("/getHistoryUser",(req,res)=>{
+   return response(200,historyUser,"OK",false,res)
+})
+
 route.post("/clear", (req, res) => {
     history = []; // Hapus riwayat
+    historyUser = []
     startNewChat(); // Mulai sesi obrolan baru
     response(200, {}, "Riwayat obrolan telah dihapus dan sesi baru telah dimulai", false, res);
 });
@@ -36,7 +42,8 @@ route.post("/gemini", async (req, res) => {
     try {
         const result = await engineAI.sendMessage(prompt);
         const data = result.response.text();
-        history.push({ prompt, response: data }); // Simpan riwayat
+        historyUser.push({ prompt:prompt, response: data }); // Simpan riwayat
+        
         return response(
             200,
             {
