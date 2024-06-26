@@ -15,7 +15,7 @@ function startNewChat() {
    engineAI = model.startChat({
       history: history,
       generationConfig: {
-         maxOutputTokens: 100,
+         maxOutputTokens: 250,
       },
    });
 }
